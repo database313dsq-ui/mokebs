@@ -42,12 +42,12 @@ const LoginPage = ({ changePage }: VotePageProps) => {
                     <div className="input-group">
                         <label>الاسم الثلاثي للمشارك</label>
                         <i className="fas fa-user"></i>
-                        <input type="text" required id="username" placeholder="أدخل اسمك الكامل" onInput={(e) => setUsername(e.target.value)} />
+                        <input type="text" required id="username" placeholder="أدخل اسمك الكامل" onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className="input-group">
                         <label>رقم الهاتف</label>
                         <i className="fas fa-phone"></i>
-                        <input type="phone" required id="phone" placeholder="أدخل رقم الهاتف" onInput={(e) => setPhone(e.target.value)} />
+                        <input type="phone" required id="phone" placeholder="أدخل رقم الهاتف" onChange={(e) => setPhone(e.target.value)} />
                     </div>
                     <button className="btn-submit" type="submit">
                         التسجيل والمتابعة <i className="fas fa-arrow-left"></i>
