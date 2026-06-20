@@ -4,7 +4,7 @@ interface CardType {
     id?: number;
     name: string;
     votes?: number;
-    type: "mokeb" | "person";
+    type: "mokeb" | "voter";
     setId: ({id, name} : {id: number, name: string}) => void;
     phone_number?: string;
 }
