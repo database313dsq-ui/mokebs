@@ -16,7 +16,7 @@ interface MokebDataType {
     votes: { count: number }[];
 }
 interface ChangePageType {
-  newPage: "login" | "vote" | "success" | "admin";
+    newPage: "login" | "vote" | "success" | "admin";
 }
 
 interface VotersType {
@@ -30,7 +30,7 @@ interface PageProps {
     changePage: (params: ChangePageType) => void;
 }
 
-const AdminPage = ({changePage}: PageProps) => {
+const AdminPage = ({ changePage }: PageProps) => {
     const [mokebData, setMokebData] = useState<MokebType>({ name: "", image: new File([], ""), description: "" });
     const [idMokebe, setIdMokebe] = useState<number | null>(null)
     const [nameMokeb, setNameMokeb] = useState<string | null>(null)
@@ -38,7 +38,7 @@ const AdminPage = ({changePage}: PageProps) => {
     const saveMokeb = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const result = await AddNewMokeb(mokebData);
-        typeof result == "string" ? alert(result): alert("تمت اضافة الموكب بنجاح.")
+        typeof result == "string" ? alert(result) : alert("تمت اضافة الموكب بنجاح.")
         console.log(result);
     };
 
@@ -81,7 +81,7 @@ const AdminPage = ({changePage}: PageProps) => {
         <div id="devPage" className="p-4! text-right" dir="rtl">
             {/* الكلاس dev-badge كما هو، واستبدال الـ <i> بأيقونة React */}
             <span className="dev-badge flex items-center gap-2! w-full py-3! text-[16px]!">
-                <FaUserShield /> لوحة الإدارة 
+                <FaUserShield /> لوحة الإدارة
             </span>
 
             <h3 className="mb-[15px]!" style={{ color: 'var(--accent-gold)' }}>
@@ -139,7 +139,7 @@ const AdminPage = ({changePage}: PageProps) => {
 
                 <button
                     className="btn-submit w-full text-center"
-                    onClick={()=> changePage({newPage: "login"})}
+                    onClick={() => changePage({ newPage: "login" })}
                     style={{ background: '#333', border: '1px solid #555' }}
                 >
                     خروج
@@ -162,18 +162,27 @@ const AdminPage = ({changePage}: PageProps) => {
                 <div id="devMowakebList" className="min-h-[50px]! flex flex-col gap-3!">
                     {
                         !idMokebe ?
-                            cardsData?.length as number > 0 && cardsData as MokebDataType[] && cardsData?.map((mokeb, index) =>
-
-                                <CardAdmin key={index} id={mokeb.id} name={mokeb.name} votes={mokeb.votes[0].count} type='mokeb' setId={setInfo} />
-
-                            )
+                            (cardsData as MokebDataType[])?.map((mokeb, index) => (
+                                <CardAdmin
+                                    key={index}
+                                    id={mokeb.id}
+                                    name={mokeb.name}
+                                    votes={mokeb.votes?.[0]?.count ?? 0}
+                                    type='mokeb'
+                                    setId={setInfo}
+                                />
+                            ))
                             :
-                            cardsData?.length as number > 0 && cardsData as VotersType[] && cardsData?.map((voter, index) =>
-
-                                <CardAdmin key={index} id={index} name={voter.name} phone_number={voter.phone_number} type='mokeb' setId={setInfo} />
-                            )
-
-
+                            (cardsData as VotersType[])?.map((voter, index) => (
+                                <CardAdmin
+                                    key={index}
+                                    id={index}
+                                    name={voter.name}
+                                    phone_number={voter.phone_number}
+                                    type='voter'
+                                    setId={setInfo}
+                                />
+                            ))
                     }
                 </div>
             </div>
