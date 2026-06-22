@@ -53,7 +53,7 @@ const LoginPage = ({ changePage }: VotePageProps) => {
                         التسجيل والمتابعة <i className="fas fa-arrow-left"></i>
                     </button>
                 </div>
-                <div className="footer-text">دار سفوان القرآنية<br></br>ينتهي التصويت في اليوم السابع من محرم الحرام</div>
+                <div className="footer-text">دار سفوان القرآنية<br></br>ينتهي التصويت في اليوم العشرين من محرم الحرام</div>
             </form>
         </div>
     )
