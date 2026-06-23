@@ -48,8 +48,10 @@ export default function Home() {
 
           {page === "login" ? <LoginPage changePage={handlePageChange} /> : page === "admin" ? <AdminPage changePage={handlePageChange}/> : page === "vote" ? <VotePage userData={userData as UserDataType} changePage={handlePageChange} /> : <SuccessVotePage />}
 
-          <div className="w-full">
-              <span className="text-(--accent-gold) text-sm">بواسطة: مسلم هاشم.</span>
+          <div className="w-full flex flex-col">
+              <span className="text-(--accent-gold) text-sm">بواسطة:</span>
+              <span className="text-(--accent-gold) text-sm">مسلم هاشم </span>
+              <span className="text-(--accent-gold) text-sm">حسين خالد</span>
           </div>
         </div>
       </div>
