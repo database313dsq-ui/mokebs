@@ -4,6 +4,7 @@ import Card from "./card";
 import { useState, useEffect } from "react";
 import { getAllMokebs, searchMokeb, voteMokeb } from "../actions/modekActions";
 import Pagination from "./pagination";
+import Loading from "./loading";
 interface Cards {
     id: number;
     name: string;
@@ -45,24 +46,26 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
     const [page, setPage] = useState<number>(1);
     const [limit, setLimit] = useState<number>(10);
     const [totalPage, setTotalPage] = useState<number>(1)
-
+    const [loading, setLoading] = useState<boolean>(false);
 
 
     const from = (page - 1) * limit;
     const to = from + limit;
     const fetchCards = async () => {
-
+        setLoading(true)
         const res = searchInput ?
             await searchMokeb({ text: searchInput, from: from, to: to })
             : await getAllMokebs({ from: from, to: to });
         if (typeof res == "string") {
             alert(res)
+            setLoading(false)
             return
         };
         const { data, count } = res;
         setCards(data as Cards[]);
         const total = Math.ceil(count as number / limit)
         setTotalPage(total)
+        setLoading(false)
 
     }
     useEffect(() => {
@@ -96,9 +99,10 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
                 <input type="text" id="searchInp" placeholder="ابحث عن الموكب هنا..." onChange={(e) => setSearchInput(e.target.value)} />
             </div>
             <div className="mowakeb-list" id="mowakebListContainer">
-                {cards?.map((card) => (
+                {!loading && cards?.map((card) => (
                     <Card key={card.id} Id={card.id} isSelected={selectedId === card.id} setId={handleCardSelect} cardData={card} />
                 ))}
+                <Loading loadingState={loading} />
             </div>
             <div className="w-full flex items-center justify-center py-3!">
 
@@ -109,6 +113,7 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
                 <button onClick={handleSubmit} className="btn-submit mt-5 max-w-100" >إرسال صوتي وتأكيد الاختيار </button>
 
             </div>
+
         </div>
     )
 }
