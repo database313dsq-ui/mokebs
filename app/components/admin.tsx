@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { FaUserShield, FaCloudUploadAlt } from 'react-icons/fa';
-import { AddNewMokeb, getAllMokebsWithVotes, getVoters } from '../actions/modekActions';
+import { AddNewMokeb, deleteMokeb, getAllMokebsWithVotes, getVoters } from '../actions/modekActions';
 import CardAdmin from './cardAdmin';
 
 interface MokebType {
@@ -76,6 +76,14 @@ const AdminPage = ({ changePage }: PageProps) => {
         setIdMokebe(null);
         setNameMokeb(null)
 
+    }
+
+
+    const handleDelete = async (id: number) => {
+        const res = await deleteMokeb(id);
+        typeof res == "string" && alert(res);
+        handleRest()
+        alert("تم الحذف بنجاح.")
     }
     return (
         <div id="devPage" className="p-4! text-right" dir="rtl">
@@ -170,6 +178,7 @@ const AdminPage = ({ changePage }: PageProps) => {
                                     votes={mokeb.votes?.[0]?.count ?? 0}
                                     type='mokeb'
                                     setId={setInfo}
+                                    onDelete={handleDelete}
                                 />
                             ))
                             :

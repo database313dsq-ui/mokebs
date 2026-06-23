@@ -26,7 +26,7 @@ const Card = ({isSelected, setId, Id, cardData}: CardType) => {
     return (
         <div className={`mokebe-card ${isSelected ? "selected" : ""}`} onClick={handleSelect}>
             <div>
-                <Image unoptimized src={cardData.image_url} width={100} height={100} className="mokebe-img" alt="Image" />
+                <Image unoptimized src={cardData.image_url} width={426} height={200} className="mokebe-img" alt="Image"/>
                 <div className="mokebe-bottom-bar">
                     <div className="mokebe-info">
                         <h3 className="mokebe-name">{cardData.name}</h3>

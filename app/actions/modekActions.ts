@@ -18,10 +18,10 @@ export const AddNewMokeb = async (mokeb: Mokeb) => {
     const fileName = `${Date.now()}.${fileExtension}`;
     const filePath = fileName;
 
-    const uploadImageResult = await supabase.storage.from("mwakeb").upload(filePath, mokeb.image);
+    const uploadImageResult = await supabase.storage.from("mwakeb").upload(filePath, mokeb.image, {cacheControl:"3153600", upsert: false});
     if (uploadImageResult.error) return "Error uploading image: " + uploadImageResult.error.message;
 
-    const getLinkImageResult = supabase.storage.from("mwakeb").getPublicUrl(filePath);
+    const getLinkImageResult = supabase.storage.from("mwakeb").getPublicUrl(filePath, {transform: {quality: 100}});
     if (!getLinkImageResult.data?.publicUrl) return "Error getting image UR.";
 
     const { data, error } = await supabase.from("mwakeb").insert({
@@ -104,4 +104,16 @@ export const getVoters = async (id: number)=>{
     console.log(data)
     return data;
     
+}
+
+
+export const deleteMokeb = async (id: number) => {
+    const cookiesStore = await cookies();
+    const supabase = createClient(cookiesStore);
+
+    const { data, error } = await supabase.from("mwakeb").delete().eq("id", id);
+    if (error) return "Error deleting mokeb: " + error.message;
+
+    return true;
+
 }
