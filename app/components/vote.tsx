@@ -41,6 +41,7 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
         changePage({ newPage: "success" });
     }
     const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [selectedMokebName, setSelectedMokebName] = useState<string | null>(null);
     const [cards, setCards] = useState<Cards[] | null>(null);
     const [searchInput, setSearchInput] = useState<string>("")
     const [page, setPage] = useState<number>(1);
@@ -72,8 +73,9 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
         fetchCards()
     }, [page])
 
-    const handleCardSelect = (id: number) => {
+    const handleCardSelect = (id: number, name: string) => {
         setSelectedId(id);
+        setSelectedMokebName(name);
     }
 
     const onNext = async () => {
@@ -100,7 +102,7 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
             </div>
             <div className="mowakeb-list" id="mowakebListContainer">
                 {!loading && cards?.map((card) => (
-                    <Card key={card.id} Id={card.id} isSelected={selectedId === card.id} setId={handleCardSelect} cardData={card} />
+                    <Card key={card.id} Id={card.id} isSelected={selectedId === card.id} setInfo={handleCardSelect} cardData={card} />
                 ))}
                 <Loading loadingState={loading} />
             </div>
@@ -110,7 +112,11 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
             </div>
             <div className=" px-3! py-2! rounded flex items-center justify-center w-full max-w-112.5 ">
 
-                <button onClick={handleSubmit} className="btn-submit mt-5 max-w-100" >إرسال صوتي وتأكيد الاختيار </button>
+                <button onClick={handleSubmit} className="btn-submit mt-5 max-w-100" >
+                    {
+                        selectedMokebName ? `إرسال صوتي الى ${selectedMokebName}` : "اختر الموكب الأجمل"
+                    }
+                </button>
 
             </div>
 

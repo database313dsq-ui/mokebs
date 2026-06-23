@@ -13,15 +13,15 @@ interface CardData{
 
 interface CardType{
     isSelected: boolean;
-    setId: (id: number) => void;
     Id: number;
+    setInfo: (id: number, name: string) => void;
     cardData: CardData;
 
 }
 
-const Card = ({isSelected, setId, Id, cardData}: CardType) => {
+const Card = ({isSelected, setInfo, Id, cardData}: CardType) => {
     const handleSelect = () => {        
-        setId(Id) 
+        setInfo(Id, cardData.name)
     }
     return (
         <div className={`mokebe-card ${isSelected ? "selected" : ""}`} onClick={handleSelect}>
