@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaUserShield, FaCloudUploadAlt } from 'react-icons/fa';
 import { AddNewMokeb, deleteMokeb, getAllMokebsWithVotes, getVoters } from '../actions/modekActions';
 import CardAdmin from './cardAdmin';
+import EnhancedToggleSwitch from './toggleSwitch';
 
 interface MokebType {
     name: string;
@@ -35,6 +36,11 @@ const AdminPage = ({ changePage }: PageProps) => {
     const [idMokebe, setIdMokebe] = useState<number | null>(null)
     const [nameMokeb, setNameMokeb] = useState<string | null>(null)
     const [cardsData, setCardsData] = useState<MokebDataType[] | VotersType[] | null>(null)
+    const [isEnable, setIsEnable] = useState<boolean>(false);
+    
+    const setEnable = () => {
+        setIsEnable(!isEnable);
+    }
     const saveMokeb = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const result = await AddNewMokeb(mokebData);
@@ -143,8 +149,8 @@ const AdminPage = ({ changePage }: PageProps) => {
                     حفظ في القاعدة السحابية <FaCloudUploadAlt />
                 </button>
             </form>
-            <div className='w-full flex items-center justify-center my-4!'>
-
+            <div className='w-full flex-col gap-4! flex items-center justify-center my-4!'>
+                <EnhancedToggleSwitch isEnable={isEnable} setEnable={setEnable}/>
                 <button
                     className="btn-submit w-full text-center"
                     onClick={() => changePage({ newPage: "login" })}

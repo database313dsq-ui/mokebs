@@ -25,20 +25,33 @@ interface VotePageProps {
     userData: UserDataType;
 }
 const VotePage = ({ changePage, userData }: VotePageProps) => {
+    const [disabled, setDisabled] = useState<boolean>(false);
     const handleSubmit = async () => {
+        if (disabled) return;
+        setDisabled(true);
         if (!selectedId || !userData) {
             alert("لا يمكنك التصويت، يجب ان تختار احد المواكب.")
+            setDisabled(false);
             return null
         }
-        const res = await voteMokeb({ name: userData.name, phone_number: userData.phone_number, id: selectedId as number })
-        if (typeof res == "string") {
-            alert("هناك مشكلة، حاول مرة اخرى.")
-        }
+        try {
 
-        const data = { isVote: true, name: res.mwakeb.name, id: res.id }
-        const jsonString = JSON.stringify(data);
-        localStorage.setItem("user", jsonString);
-        changePage({ newPage: "success" });
+
+            const res = await voteMokeb({ name: userData.name, phone_number: userData.phone_number, id: selectedId as number })
+            if (typeof res == "string") {
+                alert("هناك مشكلة، حاول مرة اخرى.")
+            }
+
+            const data = { isVote: true, name: res.mwakeb.name, id: res.id }
+            const jsonString = JSON.stringify(data);
+            localStorage.setItem("user", jsonString);
+            changePage({ newPage: "success" });
+        }
+        catch (error) {
+            console.log(error)
+            setDisabled(false);
+
+        }
     }
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [selectedMokebName, setSelectedMokebName] = useState<string | null>(null);
@@ -89,6 +102,13 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
         page === 1 ? fetchCards() : setPage(1)
     }, [searchInput])
 
+    useEffect(() => {
+        const data = localStorage.getItem("user");
+        const dataJSON = JSON.parse(data as string);
+        if (dataJSON?.isVote) {
+            changePage({ newPage: "success" })
+        }
+    }, [])
 
     return (
         <div id="votePage" className="page relative w-full">
@@ -112,7 +132,7 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
             </div>
             <div className=" px-3! py-2! rounded flex items-center justify-center w-full max-w-112.5 ">
 
-                <button onClick={handleSubmit} className="btn-submit mt-5 max-w-100" >
+                <button disabled={disabled} onClick={handleSubmit} className="btn-submit mt-5 max-w-100" >
                     {
                         selectedMokebName ? `إرسال صوتي الى ${selectedMokebName}` : "اختر الموكب الأجمل"
                     }

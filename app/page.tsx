@@ -27,13 +27,7 @@ export default function Home() {
       setUserData(userData);
     }
   };
-  useEffect(() => {
-    const data = localStorage.getItem("user");
-    const dataJSON = JSON.parse(data as string);
-    if (dataJSON?.isVote) {
-      handlePageChange({ newPage: "success" })
-    }
-  }, [])
+  
 
   const changeTheme = (theme: "dark" | "light")=>{
     setTheme(theme)
