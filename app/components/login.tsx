@@ -21,7 +21,7 @@ const LoginPage = ({ changePage }: VotePageProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (username && phone) {
+        if (username) {
             const validation = validateLogin({username: username, phone_number: phone})
             if(typeof validation == "string"){
                 alert(validation);
@@ -45,9 +45,9 @@ const LoginPage = ({ changePage }: VotePageProps) => {
                         <input type="text" required id="username" placeholder="أدخل اسمك الكامل" onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className="input-group">
-                        <label>رقم الهاتف</label>
+                        <label>رقم الهاتف (اختياري)</label>
                         <i className="fas fa-phone"></i>
-                        <input type="phone" required id="phone" placeholder="أدخل رقم الهاتف" onChange={(e) => setPhone(e.target.value)} />
+                        <input type="phone" id="phone" placeholder="أدخل رقم الهاتف" onChange={(e) => setPhone(e.target.value)} />
                     </div>
                     <button className="btn-submit" type="submit">
                         التسجيل والمتابعة <i className="fas fa-arrow-left"></i>

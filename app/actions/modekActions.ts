@@ -117,3 +117,13 @@ export const deleteMokeb = async (id: number) => {
     return true;
 
 }
+
+
+export const retractVote = async (id: number) =>{
+    const cookiesStore = await cookies();
+    const supabase = createClient(cookiesStore);
+
+    const { data, error } = await supabase.from("votes").delete().eq("id", id);
+    if (error) return "Error retracting vote: " + error.message;
+    return true;
+}

@@ -35,7 +35,7 @@ const VotePage = ({ changePage, userData }: VotePageProps) => {
             alert("هناك مشكلة، حاول مرة اخرى.")
         }
 
-        const data = { isVote: true, name: res.mwakeb.name }
+        const data = { isVote: true, name: res.mwakeb.name, id: res.id }
         const jsonString = JSON.stringify(data);
         localStorage.setItem("user", jsonString);
         changePage({ newPage: "success" });

@@ -46,7 +46,7 @@ export default function Home() {
         <div className="phone-container overflow-y-auto! h-full">
           <Header theme={theme} changeTheme={changeTheme}/>
 
-          {page === "login" ? <LoginPage changePage={handlePageChange} /> : page === "admin" ? <AdminPage changePage={handlePageChange}/> : page === "vote" ? <VotePage userData={userData as UserDataType} changePage={handlePageChange} /> : <SuccessVotePage />}
+          {page === "login" ? <LoginPage changePage={handlePageChange} /> : page === "admin" ? <AdminPage changePage={handlePageChange}/> : page === "vote" ? <VotePage userData={userData as UserDataType} changePage={handlePageChange} /> : <SuccessVotePage changePage={handlePageChange}/>}
 
           <div className="w-full flex flex-col">
               <span className="text-(--accent-gold) text-sm">بواسطة:</span>

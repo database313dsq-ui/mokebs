@@ -32,9 +32,12 @@ const CardAdmin = ({ id, name, votes, type, setId, phone_number, onDelete }: Car
                     {name}
                 </div>
                 <div className="mokebe-sub flex gap-2!">
-                    <button className="font-bold cursor-pointer" onClick={handleDelete}>
-                        حذف
-                    </button>
+                    {
+                        type === "mokeb" && <button className="font-bold cursor-pointer" onClick={handleDelete}>
+                            حذف
+                        </button>
+                    }
+
                     <div>
                         {votes ? votes : phone_number}
 
